@@ -1,0 +1,10 @@
+langchain
+google-genai
+streamlit
+dotenv
+pydantic
+requests
+google
+eventregistry
+fastapi
+uvicorn
