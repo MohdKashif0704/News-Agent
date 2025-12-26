@@ -5,7 +5,8 @@ import requests
 
 from dotenv import load_dotenv
 load_dotenv()
-NEWS_API_KEY = "64ec200e-1a00-467b-91d8-624f3f4ad5c1"
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+
 er = EventRegistry(apiKey=NEWS_API_KEY, allowUseOfArchive=False)
 
 @tool(name_or_callable="get_news")
