@@ -8,3 +8,5 @@ google
 eventregistry
 fastapi
 uvicorn
+langchain-groq
+langsmith

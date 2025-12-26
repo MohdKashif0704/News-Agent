@@ -31,7 +31,7 @@ def get_news(field:str):
 
 @tool(name_or_callable="send_msg")
 def send_msg(msg:str):
-    """Description : Send a news message to a Telegram bot for story approval.
+    """Description : Send fetch news to a Telegram bot for story approval for the authentification of the news.
        Input : msg (str) : The message content of news to be sent to the Telegram bot.
        Output : None"""
     
@@ -56,3 +56,33 @@ def send_msg(msg:str):
 
     requests.post(url, json=payload)
 
+from langchain.tools import tool
+
+@tool(name_or_callable="request_video_approval")
+def request_video_approval(summary: str) -> str:
+    """
+    Stop point for human approval before video generation.
+    """
+    return "Waiting for approval"
+
+
+@tool(name_or_callable="send_final_output")
+def send_final_output(text: str) -> str:
+    """
+    Send final output to Telegram (NO buttons, NO approval).
+    Used after agent finishes work.
+    """
+    BOT_TOKEN = os.getenv("TELEGRAM_TOKEN_KEY")
+    CHAT_ID = os.getenv("TELEGRAM_BOT_KEY")
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+    payload = {
+        "chat_id": CHAT_ID,
+        "text": text,
+        "parse_mode": "Markdown"
+    }
+
+    response = requests.post(url, json=payload, timeout=10)
+    response.raise_for_status()
+
+    return "Final output sent to Telegram"
